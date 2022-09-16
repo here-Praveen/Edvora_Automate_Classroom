@@ -1,6 +1,10 @@
+import java.io.FileReader;
 import java.util.Random;
 import java.util.UUID;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -70,12 +74,32 @@ public class Two {
 	        
 	        driver.findElement(By.xpath("/html/body/div[2]/div[4]/div/section/div[2]/div[2]/div/button")).click();
 	        Thread.sleep(2000);
+
+            JSONObject obj = new JSONObject();
+            obj.put("Classroom",cla);    
+            obj.put("Section",sec);    
+            obj.put("Joincode",code);    
+            
+            JSONObject jsonObjectdecode = (JSONObject)obj;
+            String clname = (String)jsonObjectdecode.get("Classroom");
+            String sect = (String)jsonObjectdecode.get("Section");
+            String jcod = (String)jsonObjectdecode.get("Joincode");
+	        System.out.println("The Section is :"+clname);
+	        System.out.println("The Subject code is :"+sect);
+            
 	        driver.findElement(By.xpath("//*[text()='"+ cla +"']")).click();
 	        Thread.sleep(3000);
 	        
 	        driver.findElement(By.cssSelector("button.css-1malju0:nth-child(2) > svg:nth-child(1)")).click();
 	        String page = driver.getPageSource();
-	        if (page.contains(cla) & page.contains(code) ) {
+	        
+	        WebElement cll= driver.findElement(By.xpath("/html/body/div/div/main/div/div/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div"));
+	        String clll = cll.getText();
+	        WebElement secc= driver.findElement(By.xpath("/html/body/div/div/main/div/div/div[2]/div[2]/div/div[1]/div[1]/div/div[2]/div"));
+	        String seccc = secc.getText();
+	        WebElement ccode= driver.findElement(By.xpath("/html/body/div/div/main/div/div/div[2]/div[2]/div/div[1]/div[1]/div/div[3]/div"));
+	        String cccode = ccode.getText();
+	        if (page.contains(clll) & page.contains(seccc) & page.contains(cccode) ) {
 	            System.out.println("The Classroom was Available");
 	}
 	        else {
